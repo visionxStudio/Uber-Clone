@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uberclone/views/Homepage/homepage.dart';
 import 'package:uberclone/views/Login/loginpage.dart';
 
 Future<void> main() async {
@@ -29,6 +30,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       home: LoginPage(),
+      getPages: [
+        GetPage(
+          name: "homepage",
+          page: () => Homepage(),
+        )
+      ],
     );
   }
 }

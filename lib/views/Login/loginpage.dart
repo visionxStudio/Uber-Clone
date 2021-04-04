@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uberclone/constants/brand_colors.dart';
+import 'package:uberclone/services/authentication_services.dart';
 
 import 'login_form_fields.dart';
 
@@ -206,6 +207,8 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthenticationServices _authenticationServices = AuthenticationServices();
+
     return Container(
       height: 50.0,
       width: double.infinity,
@@ -221,7 +224,8 @@ class CustomButton extends StatelessWidget {
           style: TextStyle(fontSize: 20.0),
         ),
         onPressed: () {
-          print(authenticationController.email);
+          _authenticationServices.signInWithGoogle();
+          // print(authenticationController.password);
         },
       ),
     );
