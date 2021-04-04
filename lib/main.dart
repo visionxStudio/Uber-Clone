@@ -1,11 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:uberclone/views/loginpage.dart';
+import 'package:uberclone/views/Login/loginpage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final FirebaseApp app = await Firebase.initializeApp(
+  await Firebase.initializeApp(
     name: 'db2',
     options: const FirebaseOptions(
       appId: '1:1051837497235:android:b6241540d6ebe3607fb266',
