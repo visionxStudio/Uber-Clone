@@ -6,21 +6,26 @@ import 'package:uberclone/services/authentication_services.dart';
 
 import 'login_form_fields.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   final AuthController _authController = Get.put(AuthController());
-  final AuthenticationController _authenticationController =
-      Get.put(AuthenticationController());
+
+  // final AuthController _authenticationController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
-    final _height =
-        MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
+    final _height = MediaQuery.of(context).size.height -
+        MediaQuery.of(context).viewPadding.top;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(
-            height: _height * .22,
+            height: _height * 0.22,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.centerLeft,
@@ -42,7 +47,9 @@ class LoginPage extends StatelessWidget {
                 if (_authController.isloginState.value) {
                   return Column(
                     children: [
-                      SizedBox(height: _height <= 686 ? 45 : 110.0),
+                      SizedBox(
+                          height:
+                              _height < 686 ? _height * 0.06 : _height * 0.11),
                       AppLogo(),
                       SizedBox(height: 40.0),
                       WelcomeText(),
@@ -53,7 +60,7 @@ class LoginPage extends StatelessWidget {
                       SizedBox(height: 40.0),
                       CustomButton(
                         actionText: "LOGIN",
-                        authenticationController: _authenticationController,
+                        authenticationController: _authController,
                       ),
                       SizedBox(height: 40.0),
                       ButtomText(
@@ -65,24 +72,26 @@ class LoginPage extends StatelessWidget {
                 } else {
                   return Column(
                     children: [
-                      SizedBox(height: _height < 686 ? 45 : 120.0),
+                      SizedBox(
+                          height:
+                              _height < 686 ? _height * 0.06 : _height * 0.11),
                       AppLogo(),
                       SizedBox(height: 40.0),
                       WelcomeText(),
-                      SizedBox(height: 14.0),
-                      NameTextField(authController: _authController),
                       SizedBox(height: 14.0),
                       EmailTextField(authController: _authController),
                       SizedBox(height: 14.0),
                       PasswordFormField(authController: _authController),
                       SizedBox(height: 14.0),
+                      NameTextField(authController: _authController),
+                      SizedBox(height: 14.0),
                       PhoneTextField(authController: _authController),
-                      SizedBox(height: 40.0),
+                      SizedBox(height: _height <= 686 ? 20 : 40.0),
                       CustomButton(
                         actionText: "SIGN UP",
-                        authenticationController: _authenticationController,
+                        authenticationController: _authController,
                       ),
-                      SizedBox(height: 40.0),
+                      SizedBox(height: _height <= 686 ? 20 : 40.0),
                       ButtomText(
                         authController: _authController,
                         text: "Already have an account? ",
@@ -112,15 +121,17 @@ class ButtomText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _height = MediaQuery.of(context).size.height -
+        MediaQuery.of(context).viewPadding.top;
     return Wrap(
       children: [
         Text(
           "$text ",
-          style: TextStyle(fontSize: 18.0),
+          style: TextStyle(fontSize: _height <= 686 ? 15 : 18.0),
         ),
         GestureDetector(
           onTap: () {
-            print(_authController.isloginState.value);
+            // TODO
             _authController.isloginState.value =
                 !_authController.isloginState.value;
           },
@@ -128,7 +139,7 @@ class ButtomText extends StatelessWidget {
             child: Text(
               'Here',
               style: TextStyle(
-                fontSize: 18.0,
+                fontSize: _height <= 686 ? 15 : 18.0,
                 decoration: TextDecoration.underline,
                 fontWeight: FontWeight.w500,
                 color: BrandColors.kcolorBlue,
@@ -148,11 +159,13 @@ class WelcomeText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _height = MediaQuery.of(context).size.height -
+        MediaQuery.of(context).viewPadding.top;
     return Text(
       "Welcome To GTaxi",
       textAlign: TextAlign.center,
       style: TextStyle(
-        fontSize: 25.0,
+        fontSize: _height <= 686 ? 20 : 25.0,
         fontFamily: "Brand-Bold",
       ),
     );
@@ -176,15 +189,6 @@ class AppLogo extends StatelessWidget {
   }
 }
 
-class AuthenticationController extends GetxController {
-  var isloginState = true.obs;
-  var isLoading = false.obs;
-
-  void toggleLoadingState() {
-    isLoading(!isLoading.value);
-  }
-}
-
 class CustomButton extends StatelessWidget {
   const CustomButton({
     Key key,
@@ -193,46 +197,57 @@ class CustomButton extends StatelessWidget {
   }) : super(key: key);
 
   final String actionText;
-  final AuthenticationController authenticationController;
+  final AuthController authenticationController;
 
   @override
   Widget build(BuildContext context) {
+    final _height = MediaQuery.of(context).size.height -
+        MediaQuery.of(context).viewPadding.top;
     AuthenticationServices _authenticationServices = AuthenticationServices();
 
-    return Container(
-      height: 50.0,
-      width: authenticationController.isLoading.value ? 80 : double.infinity,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: BrandColors.kcolorAccent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(
-                authenticationController.isLoading.value ? 10 : 30.0),
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeIn,
+      width: authenticationController.isLoading.value
+          ? 50
+          : MediaQuery.of(context).size.width * 1,
+      child: Container(
+        height: _height <= 686 ? _height * 0.080 : _height * 0.065,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: BrandColors.kcolorAccent,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                  authenticationController.isLoading.value ? 50 : 30.0),
+            ),
           ),
-        ),
-        child: Obx(() {
-          return authenticationController.isLoading.value
-              ? Center(
-                  child: Container(
-                    height: 20,
-                    width: 20,
-                    child: CircularProgressIndicator(
-                      backgroundColor: Colors.white,
+          child: Obx(() {
+            return authenticationController.isLoading.value
+                ? Center(
+                    child: Container(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.white,
+                      ),
                     ),
-                  ),
-                )
-              : Text(
-                  "$actionText",
-                  style: TextStyle(fontSize: 20.0),
-                );
-        }),
-        onPressed: () {
-          if (authenticationController.isloginState.value) {
-            authenticationController.toggleLoadingState();
-            _authenticationServices.signupUserWithEmailAndPassword();
-            authenticationController.toggleLoadingState();
-          }
-        },
+                  )
+                : Text(
+                    "$actionText",
+                    style: TextStyle(fontSize: 20.0),
+                  );
+          }),
+          onPressed: () {
+            if (authenticationController.isloginState.value) {
+              // perform the login here
+              print("login");
+            } else {
+              // Perform the signup in here
+              print("signup");
+              _authenticationServices.signupUserWithEmailAndPassword();
+            }
+          },
+        ),
       ),
     );
   }

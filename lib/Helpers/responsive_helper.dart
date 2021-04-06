@@ -17,4 +17,12 @@ class SizeConfig {
         ? screenHeight * 0.024
         : screenWidth * 0.024;
   }
+
+  static bool isSmall() {
+    if (screenHeight <= 686) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

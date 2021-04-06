@@ -6,4 +6,9 @@ class AuthController extends GetxController {
   var password = "password".obs;
   var fullName = "Full Name".obs;
   var phoneNumber = "9800918289".obs;
+  var isLoading = false.obs;
+
+  void toggleLoadingState() {
+    isLoading(!isLoading.value);
+  }
 }

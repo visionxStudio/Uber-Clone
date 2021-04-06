@@ -13,7 +13,10 @@ class PasswordFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _height = MediaQuery.of(context).size.height -
+        MediaQuery.of(context).viewPadding.top;
     return Container(
+      height: _height <= 686 ? _height * 0.08 : _height * 0.065,
       color: Colors.grey[200],
       child: TextField(
         onChanged: (value) {
@@ -65,7 +68,10 @@ class EmailTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _height = MediaQuery.of(context).size.height -
+        MediaQuery.of(context).viewPadding.top;
     return Container(
+      height: _height <= 686 ? _height * 0.08 : _height * 0.065,
       color: Colors.grey[200],
       child: TextField(
         onChanged: (value) {
@@ -117,7 +123,10 @@ class NameTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _height = MediaQuery.of(context).size.height -
+        MediaQuery.of(context).viewPadding.top;
     return Container(
+      height: _height <= 686 ? _height * 0.08 : _height * 0.065,
       color: Colors.grey[200],
       child: TextField(
         onChanged: (value) {
@@ -169,7 +178,10 @@ class PhoneTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _height = MediaQuery.of(context).size.height -
+        MediaQuery.of(context).viewPadding.top;
     return Container(
+      height: _height <= 686 ? _height * 0.08 : _height * 0.065,
       color: Colors.grey[200],
       child: TextField(
         onChanged: (value) {
@@ -184,7 +196,7 @@ class PhoneTextField extends StatelessWidget {
               color: BrandColors.kcolorAccent,
             ),
           ),
-          fillColor: Colors.grey,
+          // fillColor: Colors.grey,
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: Colors.grey,
