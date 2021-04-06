@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:uberclone/constants/brand_colors.dart';
-
-import 'loginpage.dart';
+import 'package:uberclone/controllers/Auth_controller.dart';
 
 class PasswordFormField extends StatelessWidget {
   const PasswordFormField({
     Key key,
-    @required AuthenticationController authenticationController,
-  })  : _authenticationController = authenticationController,
+    @required AuthController authController,
+  })  : _authController = authController,
         super(key: key);
 
-  final AuthenticationController _authenticationController;
+  final AuthController _authController;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +17,7 @@ class PasswordFormField extends StatelessWidget {
       color: Colors.grey[200],
       child: TextField(
         onChanged: (value) {
-          _authenticationController.password.value = value;
+          _authController.password.value = value;
         },
         obscureText: true,
         keyboardType: TextInputType.text,
@@ -58,11 +57,11 @@ class PasswordFormField extends StatelessWidget {
 class EmailTextField extends StatelessWidget {
   const EmailTextField({
     Key key,
-    @required AuthenticationController authenticationController,
-  })  : _authenticationController = authenticationController,
+    @required AuthController authController,
+  })  : _authController = authController,
         super(key: key);
 
-  final AuthenticationController _authenticationController;
+  final AuthController _authController;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +69,7 @@ class EmailTextField extends StatelessWidget {
       color: Colors.grey[200],
       child: TextField(
         onChanged: (value) {
-          _authenticationController.email.value = value;
+          _authController.email.value = value;
         },
         obscureText: false,
         keyboardType: TextInputType.emailAddress,
@@ -110,11 +109,11 @@ class EmailTextField extends StatelessWidget {
 class NameTextField extends StatelessWidget {
   const NameTextField({
     Key key,
-    @required AuthenticationController authenticationController,
-  })  : _authenticationController = authenticationController,
+    @required AuthController authController,
+  })  : _authenticationController = authController,
         super(key: key);
 
-  final AuthenticationController _authenticationController;
+  final AuthController _authenticationController;
 
   @override
   Widget build(BuildContext context) {
@@ -162,11 +161,11 @@ class NameTextField extends StatelessWidget {
 class PhoneTextField extends StatelessWidget {
   const PhoneTextField({
     Key key,
-    @required AuthenticationController authenticationController,
-  })  : _authenticationController = authenticationController,
+    @required AuthController authController,
+  })  : _authController = authController,
         super(key: key);
 
-  final AuthenticationController _authenticationController;
+  final AuthController _authController;
 
   @override
   Widget build(BuildContext context) {
@@ -174,7 +173,7 @@ class PhoneTextField extends StatelessWidget {
       color: Colors.grey[200],
       child: TextField(
         onChanged: (value) {
-          _authenticationController.phoneNumber.value = value;
+          _authController.phoneNumber.value = value;
         },
         obscureText: false,
         keyboardType: TextInputType.phone,

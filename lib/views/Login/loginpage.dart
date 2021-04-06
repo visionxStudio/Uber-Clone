@@ -1,110 +1,102 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uberclone/Helpers/responsive_helper.dart';
 import 'package:uberclone/constants/brand_colors.dart';
+import 'package:uberclone/controllers/Auth_controller.dart';
 import 'package:uberclone/services/authentication_services.dart';
 
 import 'login_form_fields.dart';
 
 class LoginPage extends StatelessWidget {
+  final AuthController _authController = Get.put(AuthController());
   final AuthenticationController _authenticationController =
       Get.put(AuthenticationController());
 
   @override
   Widget build(BuildContext context) {
-    final _height = MediaQuery.of(context).size.height;
+    final defaultSize = SizeConfig.defaultSize;
+
+    final _height =
+        MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Container(
-              height: 200,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [
-                      Colors.green[800],
-                      Colors.green[400],
-                    ]),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(40.0),
-                  bottomRight: Radius.circular(40.0),
-                ),
+      body: Stack(
+        children: [
+          Container(
+            height: 200,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    Colors.green[800],
+                    Colors.green[400],
+                  ]),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(40.0),
+                bottomRight: Radius.circular(40.0),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: SingleChildScrollView(
-                child: Obx(() {
-                  if (_authenticationController.isloginState.value) {
-                    return Column(
-                      children: [
-                        SizedBox(height: _height < 686 ? 45 : 120.0),
-                        AppLogo(),
-                        SizedBox(height: 40.0),
-                        WelcomeText(),
-                        SizedBox(height: 14.0),
-                        EmailTextField(
-                            authenticationController:
-                                _authenticationController),
-                        SizedBox(height: 14.0),
-                        PasswordFormField(
-                            authenticationController:
-                                _authenticationController),
-                        SizedBox(height: 40.0),
-                        CustomButton(
-                          actionText: "LOGIN",
-                          authenticationController: _authenticationController,
-                        ),
-                        SizedBox(height: 40.0),
-                        ButtomText(
-                          authenticationController: _authenticationController,
-                          text: "Don't Have an account? ",
-                        ),
-                      ],
-                    );
-                  } else {
-                    return Column(
-                      children: [
-                        SizedBox(height: _height < 686 ? 45 : 120.0),
-                        AppLogo(),
-                        SizedBox(height: 40.0),
-                        WelcomeText(),
-                        SizedBox(height: 14.0),
-                        NameTextField(
-                            authenticationController:
-                                _authenticationController),
-                        SizedBox(height: 14.0),
-                        EmailTextField(
-                            authenticationController:
-                                _authenticationController),
-                        SizedBox(height: 14.0),
-                        PasswordFormField(
-                            authenticationController:
-                                _authenticationController),
-                        SizedBox(height: 14.0),
-                        PhoneTextField(
-                            authenticationController:
-                                _authenticationController),
-                        SizedBox(height: 40.0),
-                        CustomButton(
-                          actionText: "SIGN UP",
-                          authenticationController: _authenticationController,
-                        ),
-                        SizedBox(height: 40.0),
-                        ButtomText(
-                          authenticationController: _authenticationController,
-                          text: "Already have an account? ",
-                        ),
-                      ],
-                    );
-                  }
-                }),
-              ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: SingleChildScrollView(
+              child: Obx(() {
+                if (_authController.isloginState.value) {
+                  return Column(
+                    children: [
+                      SizedBox(height: _height < 686 ? 45 : 120.0),
+                      AppLogo(),
+                      SizedBox(height: 40.0),
+                      WelcomeText(),
+                      SizedBox(height: 14.0),
+                      EmailTextField(authController: _authController),
+                      SizedBox(height: 14.0),
+                      PasswordFormField(authController: _authController),
+                      SizedBox(height: 40.0),
+                      CustomButton(
+                        actionText: "LOGIN",
+                        authenticationController: _authenticationController,
+                      ),
+                      SizedBox(height: 40.0),
+                      ButtomText(
+                        authController: _authController,
+                        text: "Don't Have an account? ",
+                      ),
+                    ],
+                  );
+                } else {
+                  return Column(
+                    children: [
+                      SizedBox(height: _height < 686 ? 45 : 120.0),
+                      AppLogo(),
+                      SizedBox(height: 40.0),
+                      WelcomeText(),
+                      SizedBox(height: 14.0),
+                      NameTextField(authController: _authController),
+                      SizedBox(height: 14.0),
+                      EmailTextField(authController: _authController),
+                      SizedBox(height: 14.0),
+                      PasswordFormField(authController: _authController),
+                      SizedBox(height: 14.0),
+                      PhoneTextField(authController: _authController),
+                      SizedBox(height: 40.0),
+                      CustomButton(
+                        actionText: "SIGN UP",
+                        authenticationController: _authenticationController,
+                      ),
+                      SizedBox(height: 40.0),
+                      ButtomText(
+                        authController: _authController,
+                        text: "Already have an account? ",
+                      ),
+                    ],
+                  );
+                }
+              }),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -113,12 +105,12 @@ class LoginPage extends StatelessWidget {
 class ButtomText extends StatelessWidget {
   const ButtomText({
     Key key,
-    @required AuthenticationController authenticationController,
+    @required AuthController authController,
     @required this.text,
-  })  : _authenticationController = authenticationController,
+  })  : _authController = authController,
         super(key: key);
 
-  final AuthenticationController _authenticationController;
+  final AuthController _authController;
   final String text;
 
   @override
@@ -131,9 +123,9 @@ class ButtomText extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            print(_authenticationController.isloginState.value);
-            _authenticationController.isloginState.value =
-                !_authenticationController.isloginState.value;
+            print(_authController.isloginState.value);
+            _authController.isloginState.value =
+                !_authController.isloginState.value;
           },
           child: Container(
             child: Text(
@@ -189,10 +181,11 @@ class AppLogo extends StatelessWidget {
 
 class AuthenticationController extends GetxController {
   var isloginState = true.obs;
-  var email = "mail@mail.com".obs;
-  var password = "password".obs;
-  var fullName = "Full Name".obs;
-  var phoneNumber = "9800918289".obs;
+  var isLoading = false.obs;
+
+  void toggleLoadingState() {
+    isLoading(!isLoading.value);
+  }
 }
 
 class CustomButton extends StatelessWidget {
@@ -211,70 +204,38 @@ class CustomButton extends StatelessWidget {
 
     return Container(
       height: 50.0,
-      width: double.infinity,
+      width: authenticationController.isLoading.value ? 80 : double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           primary: BrandColors.kcolorAccent,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
+            borderRadius: BorderRadius.circular(
+                authenticationController.isLoading.value ? 10 : 30.0),
           ),
         ),
-        child: Text(
-          "$actionText",
-          style: TextStyle(fontSize: 20.0),
-        ),
+        child: Obx(() {
+          return authenticationController.isLoading.value
+              ? Center(
+                  child: Container(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.white,
+                    ),
+                  ),
+                )
+              : Text(
+                  "$actionText",
+                  style: TextStyle(fontSize: 20.0),
+                );
+        }),
         onPressed: () {
-          _authenticationServices.signInWithGoogle();
-          // print(authenticationController.password);
+          if (authenticationController.isloginState.value) {
+            authenticationController.toggleLoadingState();
+            _authenticationServices.signupUserWithEmailAndPassword();
+            authenticationController.toggleLoadingState();
+          }
         },
-      ),
-    );
-  }
-}
-
-class CustomTextField extends StatelessWidget {
-  const CustomTextField({
-    Key key,
-    @required this.isPassword,
-    @required this.title,
-  }) : super(key: key);
-
-  final bool isPassword;
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      obscureText: isPassword ? true : false,
-      keyboardType:
-          isPassword ? TextInputType.text : TextInputType.emailAddress,
-      decoration: InputDecoration(
-        focusColor: BrandColors.kcolorAccent,
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: BrandColors.kcolorAccent,
-          ),
-        ),
-        fillColor: Colors.grey,
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.grey,
-          ),
-        ),
-        disabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: BrandColors.kcolorLightGray,
-          ),
-        ),
-        prefixIcon: isPassword ? Icon(Icons.lock) : Icon(Icons.email),
-        labelText: "$title",
-        labelStyle: TextStyle(
-          fontSize: 18.0,
-          color: Colors.grey,
-        ),
-      ),
-      style: TextStyle(
-        fontSize: 14.0,
       ),
     );
   }
