@@ -10,14 +10,11 @@ class SizeConfig {
   void init(BuildContext context) {
     _mediaQueryData = MediaQuery.of(context);
     screenWidth = _mediaQueryData.size.width;
-    screenHeight = _mediaQueryData.size.height;
+    screenHeight =
+        _mediaQueryData.size.height - MediaQuery.of(context).padding.top;
     orientation = _mediaQueryData.orientation;
-    // On iPhone 11 the defaultSize = 10 almost
-    // So if the screen size increase or decrease then our defaultSize also vary
-    // defaultSize = orientation == Orientation.landscape
-    //     ? screenHeight * 0.024
-    //     : screenWidth * 0.024;
-    //
-    defaultSize = screenHeight;
+    defaultSize = orientation == Orientation.landscape
+        ? screenHeight * 0.024
+        : screenWidth * 0.024;
   }
 }

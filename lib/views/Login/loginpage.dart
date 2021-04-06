@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:uberclone/Helpers/responsive_helper.dart';
 import 'package:uberclone/constants/brand_colors.dart';
 import 'package:uberclone/controllers/Auth_controller.dart';
 import 'package:uberclone/services/authentication_services.dart';
@@ -14,8 +13,6 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final defaultSize = SizeConfig.defaultSize;
-
     final _height =
         MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
     return Scaffold(
@@ -23,7 +20,7 @@ class LoginPage extends StatelessWidget {
       body: Stack(
         children: [
           Container(
-            height: 200,
+            height: _height * .22,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.centerLeft,
@@ -45,7 +42,7 @@ class LoginPage extends StatelessWidget {
                 if (_authController.isloginState.value) {
                   return Column(
                     children: [
-                      SizedBox(height: _height < 686 ? 45 : 120.0),
+                      SizedBox(height: _height <= 686 ? 45 : 110.0),
                       AppLogo(),
                       SizedBox(height: 40.0),
                       WelcomeText(),
