@@ -18,7 +18,8 @@ class PasswordFormField extends StatelessWidget {
     return Container(
       height: _height <= 686 ? _height * 0.08 : _height * 0.065,
       color: Colors.grey[200],
-      child: TextField(
+      child: TextFormField(
+        initialValue: _authenticationController.password.value,
         onChanged: (value) {
           if (value == null) {
             _authenticationController.password.value = "";
@@ -87,15 +88,7 @@ class EmailTextField extends StatelessWidget {
       height: _height <= 686 ? _height * 0.08 : _height * 0.065,
       color: Colors.grey[200],
       child: TextFormField(
-        validator: (value) {
-          if (value.isEmpty) {
-            return 'Enter an Email';
-          }
-          if (!isEmail(value.trim())) {
-            return 'Enter a Valid Email Address';
-          }
-          return null;
-        },
+        initialValue: _authController.email.value,
         onFieldSubmitted: (value) {
           if (value.length <= 5) {}
         },
@@ -157,7 +150,8 @@ class NameTextField extends StatelessWidget {
     return Container(
       height: _height <= 686 ? _height * 0.08 : _height * 0.065,
       color: Colors.grey[200],
-      child: TextField(
+      child: TextFormField(
+        initialValue: _authenticationController.fullName.value,
         onChanged: (value) {
           if (_authenticationController.fullName.value == null) {
             _authenticationController.fullName.value = '';
@@ -215,7 +209,8 @@ class PhoneTextField extends StatelessWidget {
     return Container(
       height: _height <= 686 ? _height * 0.08 : _height * 0.065,
       color: Colors.grey[200],
-      child: TextField(
+      child: TextFormField(
+        initialValue: _authController.phoneNumber.value,
         onChanged: (value) {
           _authController.phoneNumber.value = value;
         },

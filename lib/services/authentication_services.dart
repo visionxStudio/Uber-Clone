@@ -8,6 +8,7 @@ class AuthenticationServices {
   final firestoreInstance = FirebaseFirestore.instance;
   final AuthController _authController = Get.put(AuthController());
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  var uid = FirebaseAuth.instance.currentUser.uid;
 
   void signupUserWithEmailAndPassword() async {
     _authController.toggleLoadingState();
@@ -17,10 +18,15 @@ class AuthenticationServices {
       password: _authController.password.value,
     )
         .then((response) async {
-      await firestoreInstance.collection("users").add({
+      // print();
+      await firestoreInstance
+          .collection("users")
+          .doc(uid)
+          .collection("userDetails")
+          .add({
         "name": _authController.fullName.value,
-        "email": _authController.email,
-        "mobile": _authController.phoneNumber,
+        "email": _authController.email.value,
+        "mobile": _authController.phoneNumber.value,
         // "id": firestoreInstance.collection("users").id
       }).then((response) {
         Get.snackbar(
