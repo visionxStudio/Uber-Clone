@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uberclone/controllers/Auth_controller.dart';
 
@@ -13,11 +14,22 @@ class AuthenticationServices {
       email: _authController.email.value,
       password: _authController.password.value,
     )
-        .catchError((error) {
+        .then((response) {
+      _authController.toggleLoadingState();
+      if (response.user != null) {
+        Get.snackbar(
+          "Success",
+          "Successfully Signed up",
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        _authController.toggleLoadingState();
+      }
+    }).catchError((error) {
       print(error.message);
       Get.snackbar("Error Occured", error.message,
-          snackPosition: SnackPosition.BOTTOM);
-    }).whenComplete(() {
+          colorText: Colors.red, snackPosition: SnackPosition.BOTTOM);
       _authController.toggleLoadingState();
     });
   }
