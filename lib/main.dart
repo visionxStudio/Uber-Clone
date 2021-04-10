@@ -8,16 +8,16 @@ import 'package:uberclone/views/Login/loginpage.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await Firebase.initializeApp(
-    name: 'db2',
-    options: const FirebaseOptions(
-      appId: '1:1051837497235:android:b6241540d6ebe3607fb266',
-      apiKey: 'AIzaSyD1gjV8KbHxbwNVFMSVA81bhCyEuWf1ics',
-      messagingSenderId: '297855924061',
-      projectId: 'flutter-firebase-plugins',
-      databaseURL: 'https://flutterfire-cd2f7.firebaseio.com',
-    ),
-  );
+  // await Firebase.initializeApp(
+  //   name: 'db2',
+  //   options: const FirebaseOptions(
+  //     appId: '1:1051837497235:android:b6241540d6ebe3607fb266',
+  //     apiKey: 'AIzaSyD1gjV8KbHxbwNVFMSVA81bhCyEuWf1ics',
+  //     messagingSenderId: '297855924061',
+  //     projectId: 'flutter-firebase-plugins',
+  //     databaseURL: 'https://flutterfire-cd2f7.firebaseio.com',
+  //   ),
+  // );
   // runApp(MyApp());
   runApp(
     DevicePreview(

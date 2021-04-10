@@ -14,8 +14,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   final AuthController _authController = Get.put(AuthController());
 
-  // final AuthController _authenticationController = Get.put(AuthController());
-
   @override
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height -
@@ -205,50 +203,59 @@ class CustomButton extends StatelessWidget {
         MediaQuery.of(context).viewPadding.top;
     AuthenticationServices _authenticationServices = AuthenticationServices();
 
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 300),
-      curve: Curves.easeIn,
-      width: authenticationController.isLoading.value
-          ? 50
-          : MediaQuery.of(context).size.width * 1,
-      child: Container(
-        height: _height <= 686 ? _height * 0.080 : _height * 0.065,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: BrandColors.kcolorAccent,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                  authenticationController.isLoading.value ? 50 : 30.0),
+    return Obx(() {
+      return AnimatedContainer(
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeIn,
+        width: authenticationController.isLoading.value
+            ? 50
+            : MediaQuery.of(context).size.width * 0.98,
+        child: Container(
+          height: _height <= 686 ? _height * 0.080 : _height * 0.065,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: BrandColors.kcolorAccent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                    authenticationController.isLoading.value ? 50 : 10.0),
+              ),
             ),
-          ),
-          child: Obx(() {
-            return authenticationController.isLoading.value
-                ? Center(
-                    child: Container(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        backgroundColor: Colors.white,
+            child: Obx(() {
+              return authenticationController.isLoading.value
+                  ? Center(
+                      child: Container(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          backgroundColor: Colors.white,
+                        ),
                       ),
-                    ),
-                  )
-                : Text(
-                    "$actionText",
-                    style: TextStyle(fontSize: 20.0),
-                  );
-          }),
-          onPressed: () {
-            if (authenticationController.isloginState.value) {
-              // perform the login here
-              print("login");
-            } else {
-              // Perform the signup in here
-              print("signup");
-              _authenticationServices.signupUserWithEmailAndPassword();
-            }
-          },
+                    )
+                  : AnimatedOpacity(
+                      curve: Curves.bounceOut,
+                      opacity:
+                          authenticationController.isLoading.value ? 0.0 : 1.0,
+                      duration: Duration(seconds: 2),
+                      child: Text(
+                        "$actionText",
+                        style: TextStyle(fontSize: 20.0),
+                      ),
+                    );
+            }),
+            onPressed: () {
+              if (authenticationController.isloginState.value) {
+                authenticationController.toggleLoadingState();
+                // perform the login here
+                print("login");
+              } else {
+                // Perform the signup in here
+                print("signup");
+                _authenticationServices.signupUserWithEmailAndPassword();
+              }
+            },
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

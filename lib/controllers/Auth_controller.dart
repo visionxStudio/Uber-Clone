@@ -10,5 +10,6 @@ class AuthController extends GetxController {
 
   void toggleLoadingState() {
     isLoading(!isLoading.value);
+    update();
   }
 }

@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uberclone/controllers/Auth_controller.dart';
 
 class AuthenticationServices {
+  final firestoreInstance = FirebaseFirestore.instance;
   final AuthController _authController = Get.put(AuthController());
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -14,9 +16,13 @@ class AuthenticationServices {
       email: _authController.email.value,
       password: _authController.password.value,
     )
-        .then((response) {
-      _authController.toggleLoadingState();
-      if (response.user != null) {
+        .then((response) async {
+      await firestoreInstance.collection("users").add({
+        "name": _authController.fullName.value,
+        "email": _authController.email,
+        "mobile": _authController.phoneNumber,
+        // "id": firestoreInstance.collection("users").id
+      }).then((response) {
         Get.snackbar(
           "Success",
           "Successfully Signed up",
@@ -25,7 +31,7 @@ class AuthenticationServices {
           snackPosition: SnackPosition.BOTTOM,
         );
         _authController.toggleLoadingState();
-      }
+      });
     }).catchError((error) {
       print(error.message);
       Get.snackbar("Error Occured", error.message,
